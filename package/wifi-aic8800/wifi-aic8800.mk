@@ -42,6 +42,16 @@ endif
 
 LINUX_CONFIG_LOCALVERSION = $(shell awk -F "=" '/^CONFIG_LOCALVERSION=/ {print $$2}' $(BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE))
 
+define WIFI_AIC8800_DELETE_UNNECESSARY_FIRMWARE
+	if [ "$(BR2_PACKAGE_WIFI_AIC8800_USB_8800D80)" = "y" ]; then \
+		rm $(@D)/USB/driver_fw/fw/aic8800D80/fmacfw_8800d80_u02.bin \
+			$(@D)/USB/driver_fw/fw/aic8800D80/fmacfw_8800d80_u02_ipc.bin \
+			$(@D)/USB/driver_fw/fw/aic8800D80/calibmode_8800d80.bin; \
+	fi
+endef
+
+WIFI_AIC8800_PRE_INSTALL_TARGET_HOOKS += WIFI_AIC8800_DELETE_UNNECESSARY_FIRMWARE
+
 define WIFI_AIC8800_INSTALL_FIRMWARE
 	$(INSTALL) -m 0755 -d $(TARGET_DIR)/lib/modules/3.10.14$(LINUX_CONFIG_LOCALVERSION)
 	touch $(TARGET_DIR)/lib/modules/3.10.14$(LINUX_CONFIG_LOCALVERSION)/modules.builtin.modinfo
@@ -99,6 +109,16 @@ define WIFI_AIC8800_INSTALL_FIRMWARE
 endef
 
 WIFI_AIC8800_POST_INSTALL_TARGET_HOOKS += WIFI_AIC8800_INSTALL_FIRMWARE
+
+define WIFI_AIC8800_STRIP_HOOK
+	find $(TARGET_DIR) $(@D)/$(WIFI_AIC8800_MODULE_SUBDIRS) -type f \( -name "*.ko" -o -name "*.so" \) \
+		$(if $(call qstrip,$(BR2_STRIP_EXCLUDE_FILES)), \
+			-not \( $(call findfileclauses,$(call qstrip,$(BR2_STRIP_EXCLUDE_FILES))) \) ) \
+			  -print0 | xargs --no-run-if-empty -0 $(STRIPCMD)
+endef
+
+WIFI_AIC8800_POST_INSTALL_TARGET_HOOKS += WIFI_AIC8800_STRIP_HOOK
+
 
 $(eval $(kernel-module))
 $(eval $(generic-package))
