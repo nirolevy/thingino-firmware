@@ -309,7 +309,7 @@ config BR2_SENSOR_1_JXF38pS0
 config BR2_SENSOR_1_JXF63pS0
 	bool "JX-F63ps0"
 config BR2_SENSOR_1_OS02N10S0
-	bool "OnviVision OS02N10s0"
+	bool "OnviVision OS02N10S0"
 config BR2_SENSOR_1_OV9734S0
 	bool "OmnviVision OV9731s0"
 config BR2_SENSOR_1_SC1A4TS0

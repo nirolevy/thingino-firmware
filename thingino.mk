@@ -762,6 +762,8 @@ else ifeq ($(BR2_SENSOR_SP1405),y)
 	SENSOR_MODEL := sp1405
 else ifeq ($(BR2_SENSOR_TP2850),y)
 	SENSOR_MODEL := tp2850
+else ifeq ($(BR2_SENSOR_OS02N10),y)
+	SENSOR_MODEL := os02n10
 endif
 
 export SENSOR_MODEL
@@ -788,6 +790,8 @@ else ifeq ($(BR2_SENSOR_1_SC2336S0),y)
 	SENSOR_MODEL_1 := sc2336s0
 else ifeq ($(BR2_SENSOR_1_SC2336PS0),y)
 	SENSOR_MODEL_1 := sc2336ps0
+else ifeq ($(BR2_SENSOR_1_OS02N10S0),y)
+	SENSOR_MODEL_1 := os02n10s0
 endif
 
 export SENSOR_MODEL_1
@@ -814,6 +818,8 @@ else ifeq ($(BR2_SENSOR_2_SC2336S1),y)
 	SENSOR_MODEL_2 := sc2336s1
 else ifeq ($(BR2_SENSOR_2_SC2336PS1),y)
 	SENSOR_MODEL_2 := sc2336ps1
+else ifeq ($(BR2_SENSOR_2_OS02N10S1),y)
+	SENSOR_MODEL_2 := os02n10s1
 endif
 
 export SENSOR_MODEL_2
